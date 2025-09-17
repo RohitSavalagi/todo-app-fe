@@ -1,0 +1,8 @@
+@let todos = todos$ | async;
+
+@for (todo of todos; track todo._id) {
+  <app-todo-card
+    class="todo-list__card"
+    [todo]="todo"
+  ></app-todo-card>
+}

@@ -1,0 +1,24 @@
+@if (_todo) {
+  <app-checkbox
+    class="todo-card"
+    [label]="_todo.name"
+    [formControl]="formControl"
+    (valueChange)="handleValueChange($event, _todo)"
+  ></app-checkbox>
+
+  <button
+    matIconButton
+    class="todo-card__action _deleted"
+    (click)="edit(_todo)"
+  >
+    <mat-icon>edit</mat-icon>
+  </button>
+
+  <button
+    matIconButton
+    (click)="delete(_todo)"
+  >
+    <mat-icon>deleted</mat-icon>
+  </button>
+}
+<br>
