@@ -1,22 +1,24 @@
-import { createReducer, on } from "@ngrx/store";
-import { TodoItem } from "../../models/todo.interface";
-import { createTodoSuccess, deleteTodo, deleteTodoSuccess, getTodosSuccess, updateTodoSuccess } from "./todo-list.action";
-import { Actions } from "@ngrx/effects";
+import { createReducer, on } from '@ngrx/store';
+import { TodoItem } from '../../models/todo.interface';
+import {
+  createTodoSuccess,
+  deleteTodoSuccess,
+  getTodosSuccess,
+  updateTodoSuccess,
+} from './todo-list.action';
 
 const INITIAL_STATE: TodoItem[] = [];
 
 export const TodoListReducer = createReducer(
   INITIAL_STATE,
-  on(deleteTodoSuccess, (state, action) => ([
-    ...action.todoList
-  ])),
-  on(getTodosSuccess, (state, action) => ([
-    ...action.todoList,
-  ])),
-  on(createTodoSuccess, (state, action) => [
-    ...action.todoList,
+  on(getTodosSuccess, (state, action) => [...action.todoList]),
+  on(createTodoSuccess, (state, action) => [...state, action.createdTodo]),
+  on(deleteTodoSuccess, (state, action) => [
+    ...state.filter((item) => item._id !== action.id),
   ]),
   on(updateTodoSuccess, (state, action) => [
-    ...action.todoList,
+    ...state.map((item) =>
+      item._id === action.updatedTodo._id ? action.updatedTodo : item
+    ),
   ])
 );

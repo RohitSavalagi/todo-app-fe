@@ -1,13 +1,19 @@
-import { Component, inject, model, OnInit } from "@angular/core";
-import { FormsModule } from "@angular/forms";
-import { MatButtonModule } from "@angular/material/button";
-import { MAT_DIALOG_DATA, MatDialogActions, MatDialogClose, MatDialogContent, MatDialogRef } from "@angular/material/dialog";
-import { MatFormFieldModule } from "@angular/material/form-field";
-import { MatInput } from "@angular/material/input";
-import { Store } from "@ngrx/store";
-import { AppState } from "../../store/state";
-import { createTodo } from "../../store/todo-list/todo-list.action";
-import { TodoItem } from "../../models/todo.interface";
+import { Component, inject, model, OnInit } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { MatButtonModule } from '@angular/material/button';
+import {
+  MAT_DIALOG_DATA,
+  MatDialogActions,
+  MatDialogClose,
+  MatDialogContent,
+  MatDialogRef,
+} from '@angular/material/dialog';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInput } from '@angular/material/input';
+import { Store } from '@ngrx/store';
+import { AppState } from '../../store/state';
+import { createTodo } from '../../store/todo-list/todo-list.action';
+import { TodoItem } from '../../models/todo.interface';
 
 @Component({
   selector: 'app-create-todo',
@@ -21,7 +27,7 @@ import { TodoItem } from "../../models/todo.interface";
     MatInput,
     FormsModule,
     MatDialogClose,
-]
+  ],
 })
 export class CreateTodoComponent implements OnInit {
   public title = model('');
@@ -31,10 +37,9 @@ export class CreateTodoComponent implements OnInit {
   private store$ = inject(Store<AppState>);
   private data = inject<TodoItem>(MAT_DIALOG_DATA);
 
-
   public ngOnInit(): void {
-    if (this.data.name) {
-      this.title.set(this.data.name);
+    if (this.data?.title) {
+      this.title.set(this.data.title);
       this.mode = 'update';
     }
   }
@@ -44,10 +49,14 @@ export class CreateTodoComponent implements OnInit {
   }
 
   public apply(): void {
-    this.store$.dispatch(createTodo({todo: {
-      name: this.title(),
-      completed: false
-    }}))
+    this.store$.dispatch(
+      createTodo({
+        todo: {
+          title: this.title(),
+          completed: false,
+        },
+      })
+    );
     this.dialogRef.close();
   }
 }
