@@ -1,5 +1,5 @@
 @if (_todo) {
-<app-checkbox class="todo-card" [label]="_todo.title" (valueChange)="handleValueChange($event, _todo)"></app-checkbox>
+<app-checkbox class="todo-card" [value]="_todo.completed" [label]="_todo.title" (valueChange)="handleValueChange($event, _todo)"></app-checkbox>
 
 <button matIconButton class="todo-card__action _deleted" (click)="edit(_todo)">
   <mat-icon>edit</mat-icon>
@@ -7,4 +7,5 @@
 
 <button matIconButton (click)="delete(_todo)">
   <mat-icon>deleted</mat-icon>
-</button> } <br />
+</button> }
+<br />

@@ -11,7 +11,7 @@ const INITIAL_STATE: TodoItem[] = [];
 
 export const TodoListReducer = createReducer(
   INITIAL_STATE,
-  on(getTodosSuccess, (state, action) => [...action.todoList]),
+  on(getTodosSuccess, (_, action) => [...action.todoList]),
   on(createTodoSuccess, (state, action) => [...state, action.createdTodo]),
   on(deleteTodoSuccess, (state, action) => [
     ...state.filter((item) => item._id !== action.id),

@@ -1,19 +1,41 @@
 <form #form="ngForm" (ngSubmit)="apply()">
-    <mat-dialog-content>
-        <mat-form-field class="create__field" appearance="outline">
-            <mat-label for="title">Title</mat-label>
-            <input matInput="outlined" name="title" placeholder="What todo ?" required cdkFocusInitial [(ngModel)]="title" />
-        </mat-form-field>
-    </mat-dialog-content>
+  <mat-dialog-content>
+    <mat-form-field class="create__field" appearance="outline">
+      <mat-label for="title">Title</mat-label>
+      <input
+        matInput="outlined"
+        name="title"
+        placeholder="What todo ?"
+        required
+        cdkFocusInitial
+        [(ngModel)]="title"
+      />
+    </mat-form-field>
+  </mat-dialog-content>
 
-    <mat-dialog-actions>
-        @if (mode === 'create') {
-        <button cdkFocusInitial class="primary" matButton="filled" type="submit">
+  <mat-dialog-actions>
+    @if (mode === 'create') {
+    <button cdkFocusInitial class="primary" matButton="filled" type="submit">
       Apply
-    </button> } @else {
-        <button cdkFocusInitial class="primary" matButton="filled" type="button" [mat-dialog-close]="title()">
+    </button>
+    } @else {
+    <button
+      cdkFocusInitial
+      class="primary"
+      matButton="filled"
+      type="button"
+      [mat-dialog-close]="title()"
+    >
       Update
-    </button> }
-        <button class="secondary" type="button" matButton="filled">Close</button>
-    </mat-dialog-actions>
+    </button>
+    }
+    <button
+      class="secondary"
+      type="button"
+      matButton="filled"
+      (click)="close()"
+    >
+      Close
+    </button>
+  </mat-dialog-actions>
 </form>
