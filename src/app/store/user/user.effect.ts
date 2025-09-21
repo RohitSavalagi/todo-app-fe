@@ -13,7 +13,7 @@ import {
 import { catchError, map, mergeMap, of } from 'rxjs';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
-import { environment } from '../../../environments/environment';
+import { environment } from '../../../environments/environment.prod';
 
 @Injectable()
 export class UserEffect {

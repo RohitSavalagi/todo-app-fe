@@ -13,7 +13,7 @@ import {
 import { map, mergeMap } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { TodoItem } from '../../models/todo.interface';
-import { environment } from '../../../environments/environment';
+import { environment } from '../../../environments/environment.prod';
 
 @Injectable()
 export class TodoListEffect {
