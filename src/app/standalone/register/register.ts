@@ -23,6 +23,7 @@ import {
 import { Store } from '@ngrx/store';
 import { registerUser } from '../../store/user/user.action';
 import { User } from '../../models/user.mode';
+import { RouterLink } from '@angular/router';
 @Component({
   selector: 'app-register',
   imports: [
@@ -37,6 +38,7 @@ import { User } from '../../models/user.mode';
     FormsModule,
     ReactiveFormsModule,
     MatError,
+    RouterLink,
   ],
   templateUrl: './register.html',
   styleUrl: './register.less',

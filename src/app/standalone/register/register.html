@@ -26,6 +26,10 @@
 
                 <button matButton="filled" type="submit">Register</button>
             </form>
+            <div class="redirect-message" style="margin-top: 16px; text-align: center">
+                Already have an account?
+                <a [routerLink]="['/login']">Login here</a>
+            </div>
         </mat-card-content>
     </mat-card>
 </div>

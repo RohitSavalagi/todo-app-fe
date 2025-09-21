@@ -22,6 +22,7 @@ import {
 import { Store } from '@ngrx/store';
 import { User } from '../../models/user.mode';
 import { loginUser } from '../../store/user/user.action';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -37,6 +38,7 @@ import { loginUser } from '../../store/user/user.action';
     FormsModule,
     ReactiveFormsModule,
     MatError,
+    RouterLink,
   ],
   templateUrl: './login.html',
   styleUrl: './login.less',
