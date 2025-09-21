@@ -13,12 +13,13 @@ import {
 import { map, mergeMap } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { TodoItem } from '../../models/todo.interface';
+import { environment } from '../../../environments/environment';
 
 @Injectable()
 export class TodoListEffect {
   private actions = inject(Actions);
   private http = inject(HttpClient);
-  private baseUrl = 'http://localhost:4000/todos';
+  private baseUrl = `${environment.apiBaseUrl}/todos`;
 
   deleteTodoEffect = createEffect(() =>
     this.actions.pipe(
