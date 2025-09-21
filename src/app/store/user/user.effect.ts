@@ -2,12 +2,14 @@ import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import {
+  clearUserInfo,
+  clearUserInfoSuccess,
   loginUser,
   loginUserSuccess,
   registerUser,
   registerUserSuccess,
 } from './user.action';
-import { map, mergeMap } from 'rxjs';
+import { map, mergeMap, of } from 'rxjs';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 
@@ -26,7 +28,9 @@ export class UserEffect {
         console.log('register effect');
         return this.http.post(this.baseUrl + '/register', user).pipe(
           map(() => {
-            this._snackBar.open('registarion successful');
+            this._snackBar.open('registarion successful', 'ok', {
+              duration: 3000,
+            });
             this.router.navigate(['/login']);
             return registerUserSuccess({ user });
           })
@@ -48,9 +52,24 @@ export class UserEffect {
               });
               this.router.navigate(['/todos']);
               localStorage.setItem('authToken', token);
+              localStorage.setItem('userName', user.userName);
               return loginUserSuccess({ token });
             })
           );
+      })
+    )
+  );
+
+  clearUserInfoEffect = createEffect(() =>
+    this.actions.pipe(
+      ofType(clearUserInfo),
+      mergeMap(() => {
+        localStorage.clear();
+        this.router.navigate(['/login']);
+        this._snackBar.open('User info cleared successful', 'ok', {
+          duration: 3000,
+        });
+        return of(clearUserInfoSuccess());
       })
     )
   );

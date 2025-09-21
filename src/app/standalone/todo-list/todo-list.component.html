@@ -1,8 +1,12 @@
-@let todos = todos$ | async;
-
-@for (todo of todos; track todo._id) {
-  <app-todo-card
-    class="todo-list__card"
-    [todo]="todo"
-  ></app-todo-card>
-}
+<div class="todo-list">
+    <div class="todo-list__container">
+        <mat-form-field class="todo-list__input">
+            <mat-label for="title">Add a new Todo</mat-label>
+            <input matInput type="text" name="title" [(ngModel)]="title" />
+        </mat-form-field>
+        <button matButton="filled" (click)="addTodo()">Add</button>
+    </div>
+    @let todos = todos$ | async; @for (todo of todos; track todo._id) {
+    <app-todo-card class="todo-list__card" [todo]="todo"></app-todo-card>
+    }
+</div>

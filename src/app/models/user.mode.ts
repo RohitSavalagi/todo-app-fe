@@ -3,3 +3,5 @@ export interface User {
   password: string;
   token?: string;
 }
+
+export type SafeUser = Omit<User, 'password'>;

@@ -1,19 +1,32 @@
-import { Component, inject } from '@angular/core';
-import { MatButton, MatButtonModule } from '@angular/material/button';
-import { MatDialog, MatDialogModule} from '@angular/material/dialog';
+import { Component, inject, OnInit } from '@angular/core';
+import { MatButtonModule, MatIconButton } from '@angular/material/button';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+import { Store } from '@ngrx/store';
+import { selectUser } from '../../store/user/user.selector';
+import { Observable } from 'rxjs';
+import { User } from '../../models/user.mode';
+import { AsyncPipe } from '@angular/common';
 import { MatIcon } from '@angular/material/icon';
-import { CreateTodoComponent } from '../create/create.component';
+import { clearUserInfo } from '../../store/user/user.action';
 
 @Component({
   selector: 'app-header',
-  imports: [MatButton, MatIcon, MatDialogModule, MatButtonModule],
+  imports: [
+    MatDialogModule,
+    MatButtonModule,
+    AsyncPipe,
+    MatIconButton,
+    MatIcon,
+  ],
   templateUrl: './header.component.html',
-  styleUrl: './header.component.less'
+  styleUrl: './header.component.less',
 })
 export class HeaderComponent {
-  public dialog = inject(MatDialog);
+  dialog = inject(MatDialog);
+  store$ = inject(Store);
+  userInfo$: Observable<User> = this.store$.select(selectUser);
 
-  public openCreateTodoPopup(): void {
-    this.dialog.open(CreateTodoComponent);
+  logout(): void {
+    this.store$.dispatch(clearUserInfo());
   }
 }

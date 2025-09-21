@@ -1,4 +1,4 @@
-import { User } from './../../models/user.mode';
+import { SafeUser, User } from './../../models/user.mode';
 import { createAction, props } from '@ngrx/store';
 
 export const registerUser = createAction(
@@ -13,10 +13,18 @@ export const loginUser = createAction(
 
 export const registerUserSuccess = createAction(
   '[Register Componet] Register User Success',
-  props<{ user: User }>()
+  props<{ user: SafeUser }>()
 );
 
 export const loginUserSuccess = createAction(
   '[login Componet] login User Success',
   props<{ token: string }>()
+);
+
+export const clearUserInfo = createAction(
+  '[Login Component] Clearing User Info'
+);
+
+export const clearUserInfoSuccess = createAction(
+  '[Login Component] Clearing User Info Successful'
 );

@@ -1,11 +1,17 @@
-@if (_todo) {
+@if (_todo && !editMode) {
 <app-checkbox class="todo-card" [value]="_todo.completed" [label]="_todo.title" (valueChange)="handleValueChange($event, _todo)"></app-checkbox>
 
-<button matIconButton class="todo-card__action _deleted" (click)="edit(_todo)">
+<button matIconButton class="todo-card__action _edit" (click)="edit(_todo)">
   <mat-icon>edit</mat-icon>
 </button>
-
-<button matIconButton (click)="delete(_todo)">
+<button matIconButton class="todo-card__action _deleted" (click)="delete(_todo)">
   <mat-icon>deleted</mat-icon>
-</button> }
-<br />
+</button> } @else if (_todo && editMode) {
+<div class="todo-card__container">
+    <mat-form-field class="todo-card__input">
+        <mat-label for="title">Update todo</mat-label>
+        <input matInput="filled" type="text" name="title" [(ngModel)]="title" />
+    </mat-form-field>
+    <button matButton="filled" (click)="updateTodo(_todo)">Update</button>
+</div>
+}

@@ -1,6 +1,12 @@
 import { Routes } from '@angular/router';
+import { AuthGuard } from './guards/auth.guard';
 
 export const routes: Routes = [
+  {
+    path: '',
+    pathMatch: 'full',
+    redirectTo: 'login',
+  },
   {
     path: 'register',
     loadComponent: () =>
@@ -13,9 +19,14 @@ export const routes: Routes = [
   },
   {
     path: 'todos',
+    canActivate: [AuthGuard],
     loadComponent: () =>
       import('./standalone/todo-list/todo-list.component').then(
         (m) => m.TodoListComponent
       ),
+  },
+  {
+    path: '**',
+    redirectTo: 'login',
   },
 ];

@@ -1,10 +1,14 @@
+@let userInfo = userInfo$ | async;
+
 <div class="header">
     <p class="header__title">Todo List</p>
-    <button
-      matButton="filled"
-      (click)="openCreateTodoPopup()"
-    >
-      <mat-icon>add</mat-icon>
-      Add
+    @if (userInfo?.token) {
+    <div class="header__user">
+        <p>{{ userInfo?.userName }}</p>
+        <mat-icon class="header__profile">person</mat-icon>
+        <button matIconButton type="button" (click)="logout()">
+      <mat-icon class="header__logout">logout</mat-icon>
     </button>
+    </div>
+    }
 </div>

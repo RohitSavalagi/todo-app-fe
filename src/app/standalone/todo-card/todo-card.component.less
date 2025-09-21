@@ -1,11 +1,26 @@
 .todo-card {
   text-transform: capitalize;
+  padding-block: 8px;
+
+  &__container {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex: 1;
+  }
+
+  &__input {
+    flex: 1;
+  }
 
   &__action {
-    margin-left: auto;
+    &._edit {
+      margin-left: auto;
+      color: var(--mat-sys-tertiary);
+    }
 
     &._deleted {
-      color: red;
+      color: var(--mat-sys-error);
     }
   }
 }
