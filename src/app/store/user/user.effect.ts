@@ -13,12 +13,13 @@ import {
 import { catchError, map, mergeMap, of } from 'rxjs';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
+import { environment } from '../../../environments/environment';
 
 @Injectable()
 export class UserEffect {
   private actions = inject(Actions);
   private http = inject(HttpClient);
-  private baseUrl = 'http://localhost:4000/user';
+  private baseUrl = `${environment.apiBaseUrl}/user`;
   private _snackBar = inject(MatSnackBar);
   private router = inject(Router);
 
