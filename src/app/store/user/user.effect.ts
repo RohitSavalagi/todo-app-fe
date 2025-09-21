@@ -7,9 +7,10 @@ import {
   loginUser,
   loginUserSuccess,
   registerUser,
+  registerUserFailure,
   registerUserSuccess,
 } from './user.action';
-import { map, mergeMap, of } from 'rxjs';
+import { catchError, map, mergeMap, of } from 'rxjs';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 
@@ -25,14 +26,28 @@ export class UserEffect {
     this.actions.pipe(
       ofType(registerUser),
       mergeMap(({ user }) => {
-        console.log('register effect');
         return this.http.post(this.baseUrl + '/register', user).pipe(
           map(() => {
-            this._snackBar.open('registarion successful', 'ok', {
+            this._snackBar.open('Registration successful', 'OK', {
               duration: 3000,
             });
             this.router.navigate(['/login']);
             return registerUserSuccess({ user });
+          }),
+          catchError((error) => {
+            let errorMessage = 'Something went wrong. Please try again.';
+
+            if (error.status === 409) {
+              errorMessage =
+                'Username already exists. Please choose another one.';
+            } else if (error.status === 400) {
+              errorMessage = error.error?.error || 'Invalid input data';
+            }
+
+            this._snackBar.open(errorMessage, 'Close', {
+              duration: 4000,
+            });
+            return of(registerUserFailure({ error: errorMessage }));
           })
         );
       })

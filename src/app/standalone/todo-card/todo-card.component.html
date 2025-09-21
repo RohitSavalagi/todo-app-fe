@@ -8,10 +8,20 @@
   <mat-icon>deleted</mat-icon>
 </button> } @else if (_todo && editMode) {
 <div class="todo-card__container">
-    <mat-form-field class="todo-card__input">
-        <mat-label for="title">Update todo</mat-label>
-        <input matInput="filled" type="text" name="title" [(ngModel)]="title" />
-    </mat-form-field>
-    <button matButton="filled" (click)="updateTodo(_todo)">Update</button>
+    <form class="todo-card__form" [formGroup]="updateForm" (ngSubmit)="updateTodo(_todo)">
+        <mat-form-field class="todo-card__input" appearance="outline">
+            <mat-label>Update todo</mat-label>
+            <input matInput formControlName="title" /> @if ( updateForm.get('title')?.hasError('required') && updateForm.get('title')?.touched) {
+
+            <mat-error> Title is required </mat-error>
+            } @if ( updateForm.get('title')?.hasError('minlength') && updateForm.get('title')?.touched) {
+            <mat-error> Minimum 3 characters required </mat-error>
+            }
+        </mat-form-field>
+
+        <button matButton="filled" type="submit" [disabled]="updateForm.invalid">
+      Update
+    </button>
+    </form>
 </div>
 }

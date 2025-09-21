@@ -25,6 +25,7 @@ import { MAT_FORM_FIELD_DEFAULT_OPTIONS } from '@angular/material/form-field';
 import { UserReducer } from './store/user/user.reducer';
 import { UserEffect } from './store/user/user.effect';
 import { AuthInterceptor } from './interceptors/auth.interceptor';
+import { LoadingInterceptor } from './interceptors/loading.interceptor';
 export const appConfig: ApplicationConfig = {
   providers: [
     provideBrowserGlobalErrorListeners(),
@@ -53,5 +54,6 @@ export const appConfig: ApplicationConfig = {
       useClass: AuthInterceptor,
       multi: true,
     },
+    { provide: HTTP_INTERCEPTORS, useClass: LoadingInterceptor, multi: true },
   ],
 };

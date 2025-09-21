@@ -5,24 +5,28 @@ import {
   inject,
   Input,
   model,
-  OnInit,
 } from '@angular/core';
-import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import {
+  FormControl,
+  FormGroup,
+  FormsModule,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { TodoItem } from '../../models/todo.interface';
 import { CheckboxComponent } from '../../input-components/checkbox.component';
-import { HttpClient } from '@angular/common/http';
-import {
-  MatButton,
-  MatButtonModule,
-  MatIconButton,
-} from '@angular/material/button';
+import { MatButtonModule, MatIconButton } from '@angular/material/button';
 import { MatIcon } from '@angular/material/icon';
-import { props, Store } from '@ngrx/store';
+import { Store } from '@ngrx/store';
 import { deleteTodo, updateTodo } from '../../store/todo-list/todo-list.action';
 import { MatDialog } from '@angular/material/dialog';
-import { CreateTodoComponent } from '../create/create.component';
-import { MatFormField, MatInput, MatLabel } from '@angular/material/input';
+import {
+  MatError,
+  MatFormField,
+  MatInput,
+  MatLabel,
+} from '@angular/material/input';
 
 @Component({
   selector: 'app-todo-card',
@@ -42,24 +46,30 @@ import { MatFormField, MatInput, MatLabel } from '@angular/material/input';
     MatFormField,
     MatLabel,
     MatInput,
+    MatError,
   ],
 })
 export class TodoCardComponent {
   @Input()
-  public set todo(todo: TodoItem) {
+  set todo(todo: TodoItem) {
     this._todo = todo;
     this.editMode = false;
   }
 
-  public title = model('');
-  public checked: boolean = false;
-  public _todo!: TodoItem;
-  public dialog = inject(MatDialog);
-  public editMode = false;
+  checked: boolean = false;
+  _todo!: TodoItem;
+  dialog = inject(MatDialog);
+  editMode = false;
+  updateForm = new FormGroup({
+    title: new FormControl(this._todo?.title, [
+      Validators.required,
+      Validators.minLength(3),
+    ]),
+  });
 
   private store = inject(Store);
 
-  public handleValueChange(value: boolean, todo: TodoItem): void {
+  handleValueChange(value: boolean, todo: TodoItem): void {
     this.store.dispatch(
       updateTodo({
         todo: {
@@ -75,18 +85,22 @@ export class TodoCardComponent {
   }
 
   public updateTodo(todo: TodoItem): void {
-    const updatedTodo: TodoItem = {
-      ...todo,
-      title: this.title(),
-    };
+    if (this.updateForm?.value?.title) {
+      const updatedTodo: TodoItem = {
+        ...todo,
+        title: this.updateForm.value.title,
+      };
 
-    if (todo.title !== this.title()) {
-      this.store.dispatch(updateTodo({ todo: updatedTodo }));
+      if (todo.title !== this.updateForm?.value?.title) {
+        this.store.dispatch(updateTodo({ todo: updatedTodo }));
+      }
     }
   }
 
   public edit(todo: TodoItem): void {
     this.editMode = true;
-    this.title.set(todo.title);
+    this.updateForm.patchValue({
+      title: todo.title,
+    });
   }
 }

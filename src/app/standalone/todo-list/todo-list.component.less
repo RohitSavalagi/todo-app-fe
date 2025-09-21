@@ -1,6 +1,7 @@
 :host {
   display: flex;
   justify-content: center;
+  flex: 1;
 }
 
 .todo-list {
@@ -21,7 +22,23 @@
     display: flex;
   }
 
+  &__form {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
   &__input {
     flex: 1;
+  }
+
+  &__empty {
+    flex: 1;
+    text-align: center;
+    align-content: center;
+    line-height: 40px;
+    font-size: 30px;
+    font-weight: 500;
   }
 }

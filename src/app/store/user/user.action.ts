@@ -28,3 +28,8 @@ export const clearUserInfo = createAction(
 export const clearUserInfoSuccess = createAction(
   '[Login Component] Clearing User Info Successful'
 );
+
+export const registerUserFailure = createAction(
+  '[Auth] Register User Failure',
+  props<{ error: string }>()
+);

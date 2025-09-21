@@ -9,21 +9,24 @@ import {
 import { MatButton } from '@angular/material/button';
 import {
   MatCard,
-  MatCardActions,
   MatCardContent,
   MatCardHeader,
   MatCardTitle,
 } from '@angular/material/card';
-import { MatInput, MatFormField, MatLabel } from '@angular/material/input';
+import {
+  MatInput,
+  MatFormField,
+  MatLabel,
+  MatError,
+} from '@angular/material/input';
 import { Store } from '@ngrx/store';
 import { User } from '../../models/user.mode';
-import { loginUser, registerUser } from '../../store/user/user.action';
+import { loginUser } from '../../store/user/user.action';
 
 @Component({
   selector: 'app-login',
   imports: [
     MatCard,
-    MatCardActions,
     MatCardContent,
     MatCardHeader,
     MatCardTitle,
@@ -33,6 +36,7 @@ import { loginUser, registerUser } from '../../store/user/user.action';
     MatLabel,
     FormsModule,
     ReactiveFormsModule,
+    MatError,
   ],
   templateUrl: './login.html',
   styleUrl: './login.less',
@@ -50,7 +54,7 @@ export class Login {
     ]),
   });
 
-  login(): void {
+  onSubmit(): void {
     const { userName, password } = this.formGroup.value;
     if (!userName || !password) return;
     const user: User = {

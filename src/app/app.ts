@@ -6,12 +6,19 @@ import { HeaderComponent } from './standalone/header/header.component';
 import { Store } from '@ngrx/store';
 import { registerUser, registerUserSuccess } from './store/user/user.action';
 import { SafeUser, User } from './models/user.mode';
+import { LoadingOverlayComponent } from './standalone/loading/loadin.component';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.html',
   styleUrl: './app.less',
-  imports: [CommonModule, FormsModule, RouterOutlet, HeaderComponent],
+  imports: [
+    CommonModule,
+    FormsModule,
+    RouterOutlet,
+    HeaderComponent,
+    LoadingOverlayComponent,
+  ],
 })
 export class App {
   store$ = inject(Store);

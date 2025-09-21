@@ -10,13 +10,16 @@ import {
 import { MatButton } from '@angular/material/button';
 import {
   MatCard,
-  MatCardActions,
   MatCardContent,
   MatCardHeader,
   MatCardTitle,
 } from '@angular/material/card';
-import { MatSnackBar } from '@angular/material/snack-bar';
-import { MatFormField, MatInput, MatLabel } from '@angular/material/input';
+import {
+  MatError,
+  MatFormField,
+  MatInput,
+  MatLabel,
+} from '@angular/material/input';
 import { Store } from '@ngrx/store';
 import { registerUser } from '../../store/user/user.action';
 import { User } from '../../models/user.mode';
@@ -24,7 +27,6 @@ import { User } from '../../models/user.mode';
   selector: 'app-register',
   imports: [
     MatCard,
-    MatCardActions,
     MatCardContent,
     MatCardHeader,
     MatCardTitle,
@@ -34,6 +36,7 @@ import { User } from '../../models/user.mode';
     MatLabel,
     FormsModule,
     ReactiveFormsModule,
+    MatError,
   ],
   templateUrl: './register.html',
   styleUrl: './register.less',
@@ -51,7 +54,7 @@ export class Register {
     ]),
   });
 
-  register(): void {
+  onSubmit(): void {
     const { userName, password } = this.formGroup.value;
     if (!userName || !password) return;
     const user: User = {
